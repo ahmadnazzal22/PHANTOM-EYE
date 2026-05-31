@@ -43,25 +43,27 @@ Every detected object is classified, labeled, and color-coded instantly.
 
 ## 📁 Project Structure
 
-
-
 👁 phantom-eye/
 │
-├── 🐍 app.py                 # Flask server & API routes
-├── 🤖 tracker.py             # AI detection engine
+├── 📄 README.md
+├── 🐍 app.py
+├── 🤖 tracker.py
 │
 ├── 📂 templates/
-│   └── 🌐 index.html         # Web interface
+│   └── 🌐 index.html
 │
 ├── 📂 static/
-│   └── 🎨 style.css          # Dark UI styles
+│   └── 🎨 style.css
 │
-├── 📂 known_faces/           # ← Add person photos here
+├── 📂 known_faces/
 │   ├── 🖼️ ahmad.jpg
 │   └── 🖼️ sara.jpg
 │
-├── 📂 detected_faces/        # Auto-saved unknown faces
-└── 📂 detected_plates/       # Auto-saved plate images
+├── 📂 detected_faces/
+│   └── 🖼️ face_20240101_120000.jpg
+│
+└── 📂 detected_plates/
+    └── 🖼️ plate_ABC123_20240101.jpg
 
 
 ---
