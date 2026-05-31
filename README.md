@@ -41,29 +41,57 @@ Every detected object is classified, labeled, and color-coded instantly.
 
 ---
 
-## 📁 Project Structure
+html
+<div class="project-structure">
+    <h2>📁 Project Structure</h2>
 
+    <pre>
 👁 phantom-eye/
 │
-├── 📄 README.md
-├── 🐍 app.py
-├── 🤖 tracker.py
+├── README.md
+├── app.py
+├── tracker.py
 │
-├── 📂 templates/
-│   └── 🌐 index.html
+├── templates/
+│   └── index.html
 │
-├── 📂 static/
-│   └── 🎨 style.css
+├── static/
+│   └── style.css
 │
-├── 📂 known_faces/
-│   ├── 🖼️ ahmad.jpg
-│   └── 🖼️ sara.jpg
+├── known_faces/
+│   ├── ahmad.jpg
+│   └── sara.jpg
 │
-├── 📂 detected_faces/
-│   └── 🖼️ face_20240101_120000.jpg
+├── detected_faces/
+│   └── face_20240101_120000.jpg
 │
-└── 📂 detected_plates/
-    └── 🖼️ plate_ABC123_20240101.jpg
+└── detected_plates/
+    └── plate_ABC123_20240101.jpg
+    </pre>
+</div>
+```
+
+css
+.project-structure {
+    background: #111;
+    color: #00ff88;
+    padding: 20px;
+    border-radius: 12px;
+    font-family: Consolas, monospace;
+    margin-top: 20px;
+}
+
+.project-structure h2 {
+    color: white;
+    margin-bottom: 15px;
+}
+
+.project-structure pre {
+    white-space: pre-wrap;
+    margin: 0;
+}
+```
+
 
 
 ---
