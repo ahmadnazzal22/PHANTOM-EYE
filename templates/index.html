@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHANTOM EYE</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo">
+        <span class="logo-icon">👁</span>
+        <div class="logo-text">
+          <h1>PHANTOM<span>EYE</span></h1>
+          <p>INTELLIGENT SURVEILLANCE SYSTEM</p>
+        </div>
+      </div>
+    </div>
+    <div class="header-center">
+      <div class="status-bar">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">OFFLINE</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="stats-mini">
+        <div class="stat-mini"><span id="totalDetections">0</span><label>DETECTED</label></div>
+        <div class="stat-mini"><span id="totalPlates">0</span><label>PLATES</label></div>
+        <div class="stat-mini"><span id="totalFaces">0</span><label>FACES</label></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <button onclick="startCamera()" class="btn btn-green">
+      <span class="btn-icon">📷</span> LIVE CAMERA
+    </button>
+    <button onclick="startVideo()" class="btn btn-blue">
+      <span class="btn-icon">📁</span> VIDEO FILE
+    </button>
+    <button onclick="stopAll()" class="btn btn-red">
+      <span class="btn-icon">⛔</span> STOP
+    </button>
+    <button onclick="reloadFaces()" class="btn btn-orange">
+      <span class="btn-icon">🔄</span> RELOAD FACES
+    </button>
+    <div class="legend">
+      <span class="badge badge-red">● NEW</span>
+      <span class="badge badge-blue">● KNOWN</span>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-grid">
+
+    <!-- VIDEO -->
+    <div class="video-wrapper">
+      <div class="video-box">
+        <div class="video-corners">
+          <span class="corner tl"></span>
+          <span class="corner tr"></span>
+          <span class="corner bl"></span>
+          <span class="corner br"></span>
+        </div>
+        <img id="videoFeed" src="" alt="">
+        <div class="video-offline" id="videoOffline">
+          <div class="offline-icon">👁</div>
+          <p>SYSTEM OFFLINE</p>
+          <small>Start camera or load a video file</small>
+        </div>
+      </div>
+      <div class="video-footer">
+        <span id="fpsCounter">FPS: --</span>
+        <span id="timeCounter">--:--:--</span>
+        <span id="resCounter">-- x --</span>
+      </div>
+    </div>
+
+    <!-- SIDE PANEL -->
+    <div class="side-panel">
+
+      <div class="panel-card">
+        <div class="card-header">
+          <span class="card-icon">📡</span>
+          <h3>LIVE DETECTIONS</h3>
+          <span class="card-count" id="liveCount">0</span>
+        </div>
+        <div class="card-body" id="detectionsList">
+          <div class="empty-state">No active detections</div>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <div class="card-header">
+          <span class="card-icon">🚗</span>
+          <h3>LICENSE PLATES</h3>
+          <span class="card-count" id="platesCount">0</span>
+        </div>
+        <div class="card-body" id="platesList">
+          <div class="empty-state">No plates captured</div>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <div class="card-header">
+          <span class="card-icon">✅</span>
+          <h3>KNOWN PERSONS</h3>
+          <span class="card-count" id="knownCount">0</span>
+        </div>
+        <div class="card-body" id="personsList">
+          <div class="empty-state">No known persons detected</div>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <div class="card-header">
+          <span class="card-icon">❓</span>
+          <h3>UNKNOWN FACES</h3>
+          <span class="card-count" id="unknownCount">0</span>
+        </div>
+        <div class="card-body" id="facesList">
+          <div class="empty-state">No unknown faces logged</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    let updateInterval = null;
+
+    function setStatus(online) {
+      var dot = document.getElementById('statusDot');
+      var text = document.getElementById('statusText');
+      var offline = document.getElementById('videoOffline');
+      dot.className = 'status-dot ' + (online ? 'online' : '');
+      text.textContent = online ? 'LIVE' : 'OFFLINE';
+      offline.style.display = online ? 'none' : 'flex';
+    }
+
+    function startCamera() {
+      fetch('/start_camera', {method: 'POST'}).then(function() {
+        document.getElementById('videoFeed').src = '/video_feed';
+        setStatus(true);
+        startUpdates();
+      });
+    }
+
+    function startVideo() {
+      var path = prompt('Enter video file path:\nExample: C:\\Users\\ahmad\\Videos\\test.mp4');
+      if (!path) return;
+      fetch('/start_video', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({path: path})
+      }).then(function(r) { return r.json(); }).then(function(d) {
+        if (d.status === 'started') {
+          document.getElementById('videoFeed').src = '/video_feed';
+          setStatus(true);
+          startUpdates();
+        } else {
+          alert('File not found: ' + path);
+        }
+      });
+    }
+
+    function stopAll() {
+      fetch('/stop', {method: 'POST'});
+      document.getElementById('videoFeed').src = '';
+      setStatus(false);
+      clearInterval(updateInterval);
+    }
+
+    function reloadFaces() {
+      fetch('/reload_faces', {method: 'POST'}).then(function() {
+        alert('Face database reloaded');
+      });
+    }
+
+    function startUpdates() {
+      if (updateInterval) clearInterval(updateInterval);
+      updateInterval = setInterval(updateData, 1000);
+      updateClock();
+      setInterval(updateClock, 1000);
+    }
+
+    function updateClock() {
+      var now = new Date();
+      document.getElementById('timeCounter').textContent =
+        now.toTimeString().split(' ')[0];
+    }
+
+    function buildItem(cls, icon, title, subtitle, tag) {
+      return '<div class="det-item ' + cls + '">'
+        + '<span class="det-icon">' + icon + '</span>'
+        + '<div class="det-info">'
+        + '<b>' + title + '</b>'
+        + '<small>' + subtitle + '</small>'
+        + '</div>'
+        + tag
+        + '</div>';
+    }
+
+    function updateData() {
+
+      // Live Detections
+      fetch('/detections').then(function(r) { return r.json(); }).then(function(data) {
+        var div = document.getElementById('detectionsList');
+        document.getElementById('liveCount').textContent = data.length;
+        document.getElementById('totalDetections').textContent = data.length;
+
+        if (!data.length) {
+          div.innerHTML = '<div class="empty-state">No active detections</div>';
+          return;
+        }
+
+        var html = '';
+        for (var i = 0; i < data.length; i++) {
+          var d = data[i];
+          var cls = d.is_new ? 'red' : 'blue';
+          var tag = d.is_new
+            ? '<span class="tag tag-red">NEW</span>'
+            : '<span class="tag tag-blue">KNOWN</span>';
+
+          if (d.type === 'person') {
+            html += buildItem(cls, '👤',
+              d.name ? d.name.toUpperCase() : 'UNKNOWN',
+              'PERSON • ' + d.confidence, tag);
+          } else if (d.type === 'car') {
+            html += buildItem(cls, '🚗',
+              d.plate ? d.plate.toUpperCase() : 'UNKNOWN PLATE',
+              'VEHICLE • ' + d.confidence, tag);
+          } else if (d.type === 'animal') {
+            html += buildItem('red', '🐾',
+              d.species ? d.species.toUpperCase() : 'ANIMAL',
+              'ANIMAL • ' + d.confidence,
+              '<span class="tag tag-red">NEW</span>');
+          } else {
+            html += buildItem('gray', '📦',
+              d.name ? d.name.toUpperCase() : 'OBJECT',
+              'OBJECT • ' + d.confidence, '');
+          }
+        }
+        div.innerHTML = html;
+      });
+
+      // Plates
+      fetch('/plates').then(function(r) { return r.json(); }).then(function(data) {
+        var div = document.getElementById('platesList');
+        document.getElementById('platesCount').textContent = data.length;
+        document.getElementById('totalPlates').textContent = data.length;
+        if (!data.length) {
+          div.innerHTML = '<div class="empty-state">No plates captured</div>';
+          return;
+        }
+        var html = '';
+        for (var i = 0; i < data.length; i++) {
+          html += buildItem('blue', '🔢',
+            data[i].toUpperCase(), 'LICENSE PLATE',
+            '<span class="tag tag-blue">LOGGED</span>');
+        }
+        div.innerHTML = html;
+      });
+
+      // Known Persons
+      fetch('/known_persons').then(function(r) { return r.json(); }).then(function(data) {
+        var div = document.getElementById('personsList');
+        document.getElementById('knownCount').textContent = data.length;
+        if (!data.length) {
+          div.innerHTML = '<div class="empty-state">No known persons detected</div>';
+          return;
+        }
+        var html = '';
+        for (var i = 0; i < data.length; i++) {
+          html += buildItem('blue', '✅',
+            data[i].toUpperCase(), 'IDENTIFIED',
+            '<span class="tag tag-blue">KNOWN</span>');
+        }
+        div.innerHTML = html;
+      });
+
+      // Unknown Faces
+      fetch('/faces').then(function(r) { return r.json(); }).then(function(data) {
+        var div = document.getElementById('facesList');
+        document.getElementById('unknownCount').textContent = data.length;
+        document.getElementById('totalFaces').textContent = data.length;
+        if (!data.length) {
+          div.innerHTML = '<div class="empty-state">No unknown faces logged</div>';
+          return;
+        }
+        var html = '';
+        var start = data.length > 6 ? data.length - 6 : 0;
+        for (var i = start; i < data.length; i++) {
+          html += buildItem('red', '❓',
+            'UNKNOWN', data[i],
+            '<span class="tag tag-red">NEW</span>');
+        }
+        div.innerHTML = html;
+      });
+    }
+  </script>
+
+</body>
+</html>
