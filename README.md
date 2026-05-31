@@ -41,7 +41,7 @@ Every detected object is classified, labeled, and color-coded instantly.
 
 ---
 
-html
+```html
 <div class="project-structure">
     <h2>📁 Project Structure</h2>
 
@@ -71,7 +71,7 @@ html
 </div>
 ```
 
-css
+```css
 .project-structure {
     background: #111;
     color: #00ff88;
@@ -91,8 +91,6 @@ css
     margin: 0;
 }
 ```
-
-
 
 ---
 
