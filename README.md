@@ -1,178 +1,245 @@
 # 👁 PHANTOM EYE
-### Intelligent Surveillance System
 
-![Python](https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python)
+### Intelligent AI-Powered Surveillance System
+
+![Python](https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge\&logo=python)
 ![YOLO](https://img.shields.io/badge/YOLOv8-Ultralytics-purple?style=for-the-badge)
-![Flask](https://img.shields.io/badge/Flask-Web_UI-black?style=for-the-badge&logo=flask)
+![Flask](https://img.shields.io/badge/Flask-Web_UI-black?style=for-the-badge\&logo=flask)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 ---
 
 ## 🎯 What is PHANTOM EYE?
 
-PHANTOM EYE is a real-time AI-powered surveillance system that detects and tracks
-people, vehicles, and animals through live camera or video files.
-Every detected object is classified, labeled, and color-coded instantly.
+**PHANTOM EYE** is a real-time AI-powered surveillance platform designed to detect, classify, track, and identify objects from live cameras or video files.
+
+The system combines modern computer vision technologies to recognize:
+
+* 👤 People
+* 🚗 Vehicles
+* 🔢 License Plates
+* 🐾 Animals
+
+Each detected object is analyzed, labeled, tracked, and displayed in real time through a modern web dashboard.
 
 ---
 
 ## ✨ Features
 
-| Feature | Description |
-|--------|-------------|
-| 🔍 Motion Detection | Detects every moving object in real-time |
-| 👤 Face Recognition | Identifies known persons from your database |
-| 🚗 License Plate Reader | Reads and logs vehicle plate numbers via OCR |
-| 🐾 Animal Detection | Identifies animals by species |
-| 🔴 NEW / 🔵 KNOWN | Color-coded bounding boxes for new vs known objects |
-| 💾 Auto Save | Saves unknown faces and plate images automatically |
-| 🌐 Web Interface | Professional dark UI accessible from any browser |
-| ⚡ Optimized Speed | Frame skipping + caching for real-time performance |
+| Feature                      | Description                                    |
+| ---------------------------- | ---------------------------------------------- |
+| 🔍 Motion Detection          | Detects moving objects in real-time            |
+| 👤 Face Recognition          | Identifies known persons from a local database |
+| 🚗 License Plate Recognition | Reads and logs vehicle plates using OCR        |
+| 🐾 Animal Detection          | Detects and classifies animal species          |
+| 🔴 New Object Detection      | Highlights first-time detections               |
+| 🔵 Known Object Tracking     | Marks previously recognized identities         |
+| 💾 Auto Save                 | Saves unknown faces and detected plates        |
+| 🌐 Web Dashboard             | Access from any browser                        |
+| ⚡ Real-Time Performance      | Optimized for speed and low latency            |
+| 📹 Live Camera Support       | Monitor webcams and IP cameras                 |
+| 📁 Video File Processing     | Analyze recorded videos                        |
 
 ---
 
 ## 🖥 Demo
 
+### Detection Colors
 
+🔴 **Red Box**
+→ New / Unknown Object
 
-🔴 Red Box  → New / Unknown object (first time seen)
-🔵 Blue Box → Known object (already in database)
-
+🔵 **Blue Box**
+→ Known / Previously Identified Object
 
 ---
 
-```html
-<div class="project-structure">
-    <h2>📁 Project Structure</h2>
+## 📁 Project Structure
 
-    <pre>
+```text
 👁 phantom-eye/
 │
-├── README.md
-├── app.py
-├── tracker.py
+├── README.md                 # Project documentation
+├── app.py                    # Flask web application
+├── tracker.py                # Detection & tracking engine
 │
 ├── templates/
-│   └── index.html
+│   └── index.html            # Web interface
 │
 ├── static/
-│   └── style.css
+│   └── style.css             # UI styling
 │
-├── known_faces/
+├── known_faces/              # Registered persons database
 │   ├── ahmad.jpg
 │   └── sara.jpg
 │
-├── detected_faces/
+├── detected_faces/           # Saved unknown faces
 │   └── face_20240101_120000.jpg
 │
-└── detected_plates/
+└── detected_plates/          # Saved license plate captures
     └── plate_ABC123_20240101.jpg
-    </pre>
-</div>
-```
-
-```css
-.project-structure {
-    background: #111;
-    color: #00ff88;
-    padding: 20px;
-    border-radius: 12px;
-    font-family: Consolas, monospace;
-    margin-top: 20px;
-}
-
-.project-structure h2 {
-    color: white;
-    margin-bottom: 15px;
-}
-
-.project-structure pre {
-    white-space: pre-wrap;
-    margin: 0;
-}
 ```
 
 ---
 
 ## ⚙️ Installation
 
-### 1. Clone the repository
+### 1️⃣ Clone the Repository
+
 ```bash
 git clone https://github.com/ahmadnazzal22/phantom-eye.git
 cd phantom-eye
+```
 
+### 2️⃣ Install Dependencies
 
-2. Install dependencies
+#### PyTorch (CPU Version)
 
+```bash
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-pip install ultralytics easyocr insightface onnxruntime opencv-python flask
+```
 
+#### Main Requirements
 
-3. Add known faces (optional)
+```bash
+pip install ultralytics
+pip install easyocr
+pip install insightface
+pip install onnxruntime
+pip install opencv-python
+pip install flask
+pip install numpy
+```
 
-Place .jpg or .png photos in the known_faces/ folder.
-Name each file with the person's name:
-  known_faces/ahmad.jpg
-  known_faces/sara.jpg
+Or:
 
+```bash
+pip install -r requirements.txt
+```
 
-4. Run
+---
 
-# Windows
-$env:PYTHONIOENCODING = "utf-8"
+## 👤 Add Known Faces (Optional)
+
+Place images inside:
+
+```text
+known_faces/
+```
+
+Example:
+
+```text
+known_faces/ahmad.jpg
+known_faces/sara.jpg
+```
+
+The filename will be used as the person's identity.
+
+---
+
+## 🚀 Running the Application
+
+### Windows
+
+```powershell
+$env:PYTHONIOENCODING="utf-8"
 python app.py
+```
 
+### Linux / macOS
 
-Then open your browser at:
+```bash
+python app.py
+```
 
+---
+
+## 🌐 Open Dashboard
+
+After starting the server:
+
+```text
 http://localhost:5000
+```
 
+Open the URL in your browser.
 
-🚀 Usage
+---
 
-|Button        |Action                      |
-|--------------|----------------------------|
-|📷 LIVE CAMERA |Start webcam feed           |
-|📁 VIDEO FILE  |Load a local video file     |
-|⛔ STOP        |Stop the stream             |
-|🔄 RELOAD FACES|Refresh known faces database|
+## 🎮 Usage
 
-🧠 How It Works
+| Button          | Action                       |
+| --------------- | ---------------------------- |
+| 📷 LIVE CAMERA  | Start webcam stream          |
+| 📁 VIDEO FILE   | Load a local video           |
+| ⛔ STOP          | Stop current stream          |
+| 🔄 RELOAD FACES | Refresh known faces database |
 
+---
+
+## 🧠 System Workflow
+
+```text
 Video Frame
-    ↓
-YOLOv8 — Detect objects (person / car / animal)
-    ↓
-┌─────────────────────────────┐
-│  Person → InsightFace       │ → Known? Blue | Unknown? Red + Save
-│  Car    → EasyOCR           │ → Read plate + Save image
-│  Animal → YOLO label        │ → Show species
-└─────────────────────────────┘
-    ↓
-Draw bounding boxes + labels
-    ↓
-Stream to Web UI via Flask
+    │
+    ▼
+YOLOv8 Detection
+(Person / Vehicle / Animal)
+    │
+    ▼
+┌─────────────────────────────────────┐
+│ Person → InsightFace                │
+│      └─ Known?  → Blue Box          │
+│      └─ Unknown → Red Box + Save    │
+│                                     │
+│ Vehicle → EasyOCR                   │
+│      └─ Read License Plate          │
+│      └─ Save Plate Image            │
+│                                     │
+│ Animal → YOLO Species Label         │
+└─────────────────────────────────────┘
+    │
+    ▼
+Draw Bounding Boxes
+    │
+    ▼
+Flask Live Stream
+    │
+    ▼
+Web Dashboard
+```
 
+---
 
-⚡ Performance Optimizations
+## ⚡ Performance Optimizations
 
-	•	Frame skipping — Processes every 2nd frame
-	•	Resolution scaling — Resizes to 640px before YOLO
-	•	Face cache — Avoids re-analyzing same region
-	•	OCR throttle — Reads plates every 10 frames only
-	•	InsightFace 160px — Small crops for faster recognition
+* Frame Skipping (process every 2nd frame)
+* Resolution Scaling (640px input)
+* Face Recognition Cache
+* OCR Throttling
+* Lightweight Face Crops
+* Efficient Object Tracking
 
-🛠️ Tech Stack
+---
 
-	•	YOLOv8 — Object detection
-	•	InsightFace — Face recognition
-	•	EasyOCR — License plate reading
-	•	OpenCV — Video processing
-	•	Flask — Web server & streaming
-	•	Orbitron Font — UI typography
+## 🛠 Technology Stack
 
-📋 Requirements
+| Technology   | Purpose                   |
+| ------------ | ------------------------- |
+| YOLOv8       | Object Detection          |
+| InsightFace  | Face Recognition          |
+| EasyOCR      | License Plate Recognition |
+| OpenCV       | Video Processing          |
+| Flask        | Web Server                |
+| NumPy        | Numerical Operations      |
+| ONNX Runtime | Model Inference           |
 
+---
+
+## 📋 Requirements
+
+```text
 Python 3.10+
 torch
 ultralytics
@@ -182,18 +249,54 @@ onnxruntime
 opencv-python
 flask
 numpy
+```
 
+---
 
-👤 Author
+## 🔮 Future Enhancements
 
-Ahmad Nazzal
+* Multi-Camera Support
+* IP Camera Integration
+* Telegram Alerts
+* Email Notifications
+* Database Logging
+* Person Re-Identification
+* Vehicle Tracking
+* Heatmaps & Analytics
+* Dark Mode Dashboard Enhancements
 
-	•	GitHub: @ahmadnazzal22
-	•	Built with ❤️ using Python & AI
+---
 
-📜 License
+## 👨‍💻 Author
 
-MIT License — Free to use and modify.
+**Ahmad Nazzal**
 
-“See everything. Miss nothing.”
-— PHANTOM EYE 👁
+GitHub: @ahmadnazzal22
+
+Built with ❤️ using Python, Computer Vision, and Artificial Intelligence.
+
+---
+
+## 📜 License
+
+MIT License
+
+Free to use, modify, and distribute.
+
+---
+
+## ⭐ Support
+
+If you like this project:
+
+⭐ Star the repository
+
+🍴 Fork the project
+
+🛠 Contribute improvements
+
+---
+
+> **"See Everything. Miss Nothing."**
+>
+> **— PHANTOM EYE 👁**
