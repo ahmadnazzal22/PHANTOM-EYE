@@ -64,7 +64,7 @@ phantom-eye/
 ## ⚙️ Installation
 
 ### 1. Clone the repository
-bash
+```bash
 git clone https://github.com/ahmadnazzal22/phantom-eye.git
 cd phantom-eye
 
@@ -166,3 +166,6 @@ MIT License — Free to use and modify.
 
 “See everything. Miss nothing.”
 — PHANTOM EYE
+
+
+---
