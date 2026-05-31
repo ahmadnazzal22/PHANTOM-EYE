@@ -31,7 +31,7 @@ Every detected object is classified, labeled, and color-coded instantly.
 
 ---
 
-## 🖥️ Demo
+## 🖥 Demo
 
 
 
@@ -45,18 +45,23 @@ Every detected object is classified, labeled, and color-coded instantly.
 
 
 
-phantom-eye/
-├── app.py                  # Flask server & API routes
-├── tracker.py              # AI detection engine
-├── templates/
-│   └── index.html          # Web interface
-├── static/
-│   └── style.css           # Dark UI styles
-├── known_faces/            # Add person photos here
-│   ├── ahmad.jpg
-│   └── sara.jpg
-├── detected_faces/         # Auto-saved unknown faces
-└── detected_plates/        # Auto-saved plate images
+👁 phantom-eye/
+│
+├── 🐍 app.py                 # Flask server & API routes
+├── 🤖 tracker.py             # AI detection engine
+│
+├── 📂 templates/
+│   └── 🌐 index.html         # Web interface
+│
+├── 📂 static/
+│   └── 🎨 style.css          # Dark UI styles
+│
+├── 📂 known_faces/           # ← Add person photos here
+│   ├── 🖼️ ahmad.jpg
+│   └── 🖼️ sara.jpg
+│
+├── 📂 detected_faces/        # Auto-saved unknown faces
+└── 📂 detected_plates/       # Auto-saved plate images
 
 
 ---
@@ -96,8 +101,6 @@ http://localhost:5000
 
 
 🚀 Usage
-
-
 
 |Button        |Action                      |
 |--------------|----------------------------|
@@ -165,7 +168,4 @@ Ahmad Nazzal
 MIT License — Free to use and modify.
 
 “See everything. Miss nothing.”
-— PHANTOM EYE
-
-
----
+— PHANTOM EYE 👁
