@@ -166,8 +166,3 @@ MIT License — Free to use and modify.
 
 “See everything. Miss nothing.”
 — PHANTOM EYE
-
-
----
-
-احفظه كـ `README.md` في root المشروع وارفعه مع GitHub 🚀
