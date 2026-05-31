@@ -1,0 +1,173 @@
+# 👁 PHANTOM EYE
+### Intelligent Surveillance System
+
+![Python](https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python)
+![YOLO](https://img.shields.io/badge/YOLOv8-Ultralytics-purple?style=for-the-badge)
+![Flask](https://img.shields.io/badge/Flask-Web_UI-black?style=for-the-badge&logo=flask)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+
+---
+
+## 🎯 What is PHANTOM EYE?
+
+PHANTOM EYE is a real-time AI-powered surveillance system that detects and tracks
+people, vehicles, and animals through live camera or video files.
+Every detected object is classified, labeled, and color-coded instantly.
+
+---
+
+## ✨ Features
+
+| Feature | Description |
+|--------|-------------|
+| 🔍 Motion Detection | Detects every moving object in real-time |
+| 👤 Face Recognition | Identifies known persons from your database |
+| 🚗 License Plate Reader | Reads and logs vehicle plate numbers via OCR |
+| 🐾 Animal Detection | Identifies animals by species |
+| 🔴 NEW / 🔵 KNOWN | Color-coded bounding boxes for new vs known objects |
+| 💾 Auto Save | Saves unknown faces and plate images automatically |
+| 🌐 Web Interface | Professional dark UI accessible from any browser |
+| ⚡ Optimized Speed | Frame skipping + caching for real-time performance |
+
+---
+
+## 🖥️ Demo
+
+
+
+🔴 Red Box  → New / Unknown object (first time seen)
+🔵 Blue Box → Known object (already in database)
+
+
+---
+
+## 📁 Project Structure
+
+
+
+phantom-eye/
+├── app.py                  # Flask server & API routes
+├── tracker.py              # AI detection engine
+├── templates/
+│   └── index.html          # Web interface
+├── static/
+│   └── style.css           # Dark UI styles
+├── known_faces/            # Add person photos here
+│   ├── ahmad.jpg
+│   └── sara.jpg
+├── detected_faces/         # Auto-saved unknown faces
+└── detected_plates/        # Auto-saved plate images
+
+
+---
+
+## ⚙️ Installation
+
+### 1. Clone the repository
+bash
+git clone https://github.com/ahmadnazzal22/phantom-eye.git
+cd phantom-eye
+
+
+2. Install dependencies
+
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+pip install ultralytics easyocr insightface onnxruntime opencv-python flask
+
+
+3. Add known faces (optional)
+
+Place .jpg or .png photos in the known_faces/ folder.
+Name each file with the person's name:
+  known_faces/ahmad.jpg
+  known_faces/sara.jpg
+
+
+4. Run
+
+# Windows
+$env:PYTHONIOENCODING = "utf-8"
+python app.py
+
+
+Then open your browser at:
+
+http://localhost:5000
+
+
+🚀 Usage
+
+
+
+|Button        |Action                      |
+|--------------|----------------------------|
+|📷 LIVE CAMERA |Start webcam feed           |
+|📁 VIDEO FILE  |Load a local video file     |
+|⛔ STOP        |Stop the stream             |
+|🔄 RELOAD FACES|Refresh known faces database|
+
+🧠 How It Works
+
+Video Frame
+    ↓
+YOLOv8 — Detect objects (person / car / animal)
+    ↓
+┌─────────────────────────────┐
+│  Person → InsightFace       │ → Known? Blue | Unknown? Red + Save
+│  Car    → EasyOCR           │ → Read plate + Save image
+│  Animal → YOLO label        │ → Show species
+└─────────────────────────────┘
+    ↓
+Draw bounding boxes + labels
+    ↓
+Stream to Web UI via Flask
+
+
+⚡ Performance Optimizations
+
+	•	Frame skipping — Processes every 2nd frame
+	•	Resolution scaling — Resizes to 640px before YOLO
+	•	Face cache — Avoids re-analyzing same region
+	•	OCR throttle — Reads plates every 10 frames only
+	•	InsightFace 160px — Small crops for faster recognition
+
+🛠️ Tech Stack
+
+	•	YOLOv8 — Object detection
+	•	InsightFace — Face recognition
+	•	EasyOCR — License plate reading
+	•	OpenCV — Video processing
+	•	Flask — Web server & streaming
+	•	Orbitron Font — UI typography
+
+📋 Requirements
+
+Python 3.10+
+torch
+ultralytics
+easyocr
+insightface
+onnxruntime
+opencv-python
+flask
+numpy
+
+
+👤 Author
+
+Ahmad Nazzal
+
+	•	GitHub: @ahmadnazzal22
+	•	Built with ❤️ using Python & AI
+
+📜 License
+
+MIT License — Free to use and modify.
+
+“See everything. Miss nothing.”
+— PHANTOM EYE
+
+
+---
+
+احفظه كـ `README.md` في root المشروع وارفعه مع GitHub 🚀
