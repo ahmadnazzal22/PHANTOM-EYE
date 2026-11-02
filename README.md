@@ -1,127 +1,173 @@
 # 👁 PHANTOM EYE
+### AI-Powered Object Detection & Surveillance Dashboard
 
-### Intelligent AI-Powered Surveillance System
-
-![Python](https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge\&logo=python)
-![YOLO](https://img.shields.io/badge/YOLOv8-Ultralytics-purple?style=for-the-badge)
-![Flask](https://img.shields.io/badge/Flask-Web_UI-black?style=for-the-badge\&logo=flask)
+![Python](https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python)
+![YOLOv8](https://img.shields.io/badge/YOLOv8-Ultralytics-purple?style=for-the-badge)
+![Flask](https://img.shields.io/badge/Flask-Web%20Dashboard-black?style=for-the-badge&logo=flask)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 ---
 
-## 🎯 What is PHANTOM EYE?
+## 🎯 Overview
 
-**PHANTOM EYE** is a real-time AI-powered surveillance platform designed to detect, classify, track, and identify objects from live cameras or video files.
+**PHANTOM EYE** is a computer vision project designed to analyze live camera streams and recorded videos using AI-powered object detection, tracking, and recognition technologies.
 
-The system combines modern computer vision technologies to recognize:
+The system combines YOLOv8, OpenCV, InsightFace, and EasyOCR to process video frames and display detected objects through a Flask-based web dashboard.
 
-* 👤 People
-* 🚗 Vehicles
-* 🔢 License Plates
-* 🐾 Animals
+Depending on the enabled modules, it can analyze:
 
-Each detected object is analyzed, labeled, tracked, and displayed in real time through a modern web dashboard.
+- 👤 People
+- 🚗 Vehicles
+- 🔢 License plates
+- 🐾 Animals
 
----
+The dashboard displays detection results, labels, and visual tracking indicators in an interactive interface.
 
 ## ✨ Features
 
-| Feature                      | Description                                    |
-| ---------------------------- | ---------------------------------------------- |
-| 🔍 Motion Detection          | Detects moving objects in real-time            |
-| 👤 Face Recognition          | Identifies known persons from a local database |
-| 🚗 License Plate Recognition | Reads and logs vehicle plates using OCR        |
-| 🐾 Animal Detection          | Detects and classifies animal species          |
-| 🔴 New Object Detection      | Highlights first-time detections               |
-| 🔵 Known Object Tracking     | Marks previously recognized identities         |
-| 💾 Auto Save                 | Saves unknown faces and detected plates        |
-| 🌐 Web Dashboard             | Access from any browser                        |
-| ⚡ Real-Time Performance      | Optimized for speed and low latency            |
-| 📹 Live Camera Support       | Monitor webcams and IP cameras                 |
-| 📁 Video File Processing     | Analyze recorded videos                        |
+| Feature | Description |
+|---|---|
+| Object Detection | Detects supported objects in video frames |
+| Motion Analysis | Helps identify moving objects |
+| Face Recognition | Compares detected faces with locally registered face data |
+| License Plate OCR | Extracts text from supported vehicle plate images |
+| Object Tracking | Tracks detected objects across processed frames |
+| Detection Indicators | Uses different colors to distinguish detection states |
+| Local Data Storage | Stores configured detection images and results |
+| Web Dashboard | Displays the system through a browser interface |
+| Live Camera Input | Supports compatible webcams and configured camera streams |
+| Video Processing | Processes recorded video files |
 
----
+> Feature availability and accuracy depend on the models, configuration, camera quality, and actual implementation.
 
-## 🖥 Demo
+## 🖥️ Detection Indicators
 
-### Detection Colors
+- 🔴 **Red Box:** New or unrecognized detection.
+- 🔵 **Blue Box:** Previously recognized or tracked detection.
 
-🔴 **Red Box**
-→ New / Unknown Object
+These colors represent the project's configured visual indicators; they do not guarantee the identity of a person or object.
 
-🔵 **Blue Box**
-→ Known / Previously Identified Object
+## 🧠 System Workflow
 
----
+```text
+Camera Stream / Video File
+          |
+          v
+     Video Frames
+          |
+          v
+     YOLOv8 Detection
+          |
+          v
+   Object Classification
+          |
+    +-----+----------+
+    |                |
+    v                v
+  Person           Vehicle
+    |                |
+    v                v
+InsightFace        EasyOCR
+    |                |
+    v                v
+Face Matching    Plate Text
+    |                |
+    +-------+--------+
+            |
+            v
+    Detection Results
+            |
+            v
+    OpenCV Visualization
+            |
+            v
+      Flask Live Stream
+            |
+            v
+       Web Dashboard
+```
+
+## 🛠️ Technology Stack
+
+| Technology | Purpose |
+|---|---|
+| Python 3.10+ | Main programming language |
+| YOLOv8 / Ultralytics | Object detection |
+| InsightFace | Face analysis and recognition |
+| EasyOCR | Text recognition |
+| OpenCV | Image and video processing |
+| Flask | Web application and dashboard |
+| PyTorch | Deep learning framework |
+| ONNX Runtime | Model inference support |
+| NumPy | Numerical operations |
 
 ## 📁 Project Structure
 
 ```text
-👁 phantom-eye/
+phantom-eye/
 │
-├── README.md                 # Project documentation
-├── app.py                    # Flask web application
-├── tracker.py                # Detection & tracking engine
+├── app.py
+├── tracker.py
+├── requirements.txt
+├── README.md
 │
 ├── templates/
-│   └── index.html            # Web interface
+│   └── index.html
 │
 ├── static/
-│   └── style.css             # UI styling
+│   └── style.css
 │
-├── known_faces/              # Registered persons database
-│   ├── ahmad.jpg
-│   └── sara.jpg
-│
-├── detected_faces/           # Saved unknown faces
-│   └── face_20240101_120000.jpg
-│
-└── detected_plates/          # Saved license plate captures
-    └── plate_ABC123_20240101.jpg
+├── known_faces/
+├── detected_faces/
+└── detected_plates/
 ```
 
----
+*This is a simplified representation based on the supplied project structure. Update it to match the actual repository files.*
 
 ## ⚙️ Installation
 
-### 1️⃣ Clone the Repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/ahmadnazzal22/phantom-eye.git
 cd phantom-eye
 ```
 
-### 2️⃣ Install Dependencies
+### 2. Create a virtual environment
 
-#### PyTorch (CPU Version)
+**Windows:**
 
-```bash
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+```powershell
+python -m venv venv
+venv\Scripts\activate
 ```
 
-#### Main Requirements
+**macOS / Linux:**
 
 ```bash
-pip install ultralytics
-pip install easyocr
-pip install insightface
-pip install onnxruntime
-pip install opencv-python
-pip install flask
-pip install numpy
+python3 -m venv venv
+source venv/bin/activate
 ```
 
-Or:
+### 3. Install dependencies
+
+If the project includes a `requirements.txt` file:
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
+Otherwise, install the required packages according to the project's actual configuration:
 
-## 👤 Add Known Faces (Optional)
+```bash
+pip install ultralytics easyocr insightface onnxruntime opencv-python flask numpy
+```
 
-Place images inside:
+Install the appropriate PyTorch build for your operating system and hardware using the official PyTorch installation instructions.
+
+## 👤 Register Known Faces
+
+If face recognition is enabled, place authorized reference images inside:
 
 ```text
 known_faces/
@@ -130,170 +176,97 @@ known_faces/
 Example:
 
 ```text
-known_faces/ahmad.jpg
-known_faces/sara.jpg
+known_faces/
+├── person_01.jpg
+└── person_02.jpg
 ```
 
-The filename will be used as the person's identity.
+The filename can be used as a label by the application, depending on how the recognition module is implemented.
 
----
+Only use images when you have the appropriate permission and a legitimate reason to process them.
 
-## 🚀 Running the Application
+## 🚀 Run the Application
 
-### Windows
+**Windows PowerShell:**
 
 ```powershell
 $env:PYTHONIOENCODING="utf-8"
 python app.py
 ```
 
-### Linux / macOS
+**macOS / Linux:**
 
 ```bash
 python app.py
 ```
 
----
+## 🌐 Open the Dashboard
 
-## 🌐 Open Dashboard
-
-After starting the server:
+After starting the Flask application, open:
 
 ```text
-http://localhost:5000
+http://127.0.0.1:5000
 ```
 
-Open the URL in your browser.
+The actual address and port depend on the Flask configuration in `app.py`.
 
----
+## 🎮 Dashboard Controls
 
-## 🎮 Usage
+| Control | Action |
+|---|---|
+| LIVE CAMERA | Start a configured camera stream |
+| VIDEO FILE | Select a recorded video |
+| STOP | Stop the current processing session |
+| RELOAD FACES | Reload the configured face data |
 
-| Button          | Action                       |
-| --------------- | ---------------------------- |
-| 📷 LIVE CAMERA  | Start webcam stream          |
-| 📁 VIDEO FILE   | Load a local video           |
-| ⛔ STOP          | Stop current stream          |
-| 🔄 RELOAD FACES | Refresh known faces database |
+*Confirm that these controls and labels match the current dashboard before publishing.*
 
----
+## ⚡ Performance Considerations
 
-## 🧠 System Workflow
+The supplied design describes several performance techniques:
 
-```text
-Video Frame
-    │
-    ▼
-YOLOv8 Detection
-(Person / Vehicle / Animal)
-    │
-    ▼
-┌─────────────────────────────────────┐
-│ Person → InsightFace                │
-│      └─ Known?  → Blue Box          │
-│      └─ Unknown → Red Box + Save    │
-│                                     │
-│ Vehicle → EasyOCR                   │
-│      └─ Read License Plate          │
-│      └─ Save Plate Image            │
-│                                     │
-│ Animal → YOLO Species Label         │
-└─────────────────────────────────────┘
-    │
-    ▼
-Draw Bounding Boxes
-    │
-    ▼
-Flask Live Stream
-    │
-    ▼
-Web Dashboard
-```
+- Frame skipping
+- Input resolution scaling
+- Face recognition caching
+- OCR throttling
+- Lightweight face crops
+- Object tracking optimization
 
----
+Actual performance depends on the hardware, input resolution, model configuration, and number of enabled processing modules.
 
-## ⚡ Performance Optimizations
+## 🔐 Privacy & Responsible Use
 
-* Frame Skipping (process every 2nd frame)
-* Resolution Scaling (640px input)
-* Face Recognition Cache
-* OCR Throttling
-* Lightweight Face Crops
-* Efficient Object Tracking
+PHANTOM EYE includes features that may process identifiable information, including faces and vehicle license plates.
 
----
-
-## 🛠 Technology Stack
-
-| Technology   | Purpose                   |
-| ------------ | ------------------------- |
-| YOLOv8       | Object Detection          |
-| InsightFace  | Face Recognition          |
-| EasyOCR      | License Plate Recognition |
-| OpenCV       | Video Processing          |
-| Flask        | Web Server                |
-| NumPy        | Numerical Operations      |
-| ONNX Runtime | Model Inference           |
-
----
-
-## 📋 Requirements
-
-```text
-Python 3.10+
-torch
-ultralytics
-easyocr
-insightface
-onnxruntime
-opencv-python
-flask
-numpy
-```
-
----
+- Use the system only in environments where monitoring is authorized.
+- Obtain required permissions and follow applicable privacy laws.
+- Protect stored face images, plate captures, and detection logs.
+- Restrict access to the dashboard and stored data.
+- Define appropriate retention and deletion policies.
+- Do not treat automated recognition results as definitive proof of identity.
 
 ## 🔮 Future Enhancements
 
-* Multi-Camera Support
-* IP Camera Integration
-* Telegram Alerts
-* Email Notifications
-* Database Logging
-* Person Re-Identification
-* Vehicle Tracking
-* Heatmaps & Analytics
-* Dark Mode Dashboard Enhancements
-
----
+- Multi-camera management
+- Improved IP camera integration
+- Telegram and email notifications
+- Database-backed event logging
+- Person re-identification
+- Vehicle tracking improvements
+- Detection heatmaps and analytics
+- Enhanced dashboard customization
 
 ## 👨‍💻 Author
 
 **Ahmad Nazzal**
 
-GitHub: @ahmadnazzal22
+GitHub: [@ahmadnazzal22](https://github.com/ahmadnazzal22)
 
-Built with ❤️ using Python, Computer Vision, and Artificial Intelligence.
-
----
+Built with Python, Computer Vision, and Artificial Intelligence.
 
 ## 📜 License
 
-MIT License
-
-Free to use, modify, and distribute.
-
----
-
-## ⭐ Support
-
-If you like this project:
-
-⭐ Star the repository
-
-🍴 Fork the project
-
-🛠 Contribute improvements
+This project is presented as MIT licensed. Confirm that the repository contains a matching `LICENSE` file before publishing this claim.
 
 ---
 
